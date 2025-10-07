@@ -1,6 +1,6 @@
 ## Modelo de regresión lineal múltiple
 
-| Grado | R-cuadrado | R-cuadrado corregido |
+| Tamaño del modelo | R-cuadrado | R-cuadrado corregido |
 | :---: | --- | --- |
 | 4 | 0.815251 | 0.790617 |
 | 3 | 0.780721 | 0.759500 |
