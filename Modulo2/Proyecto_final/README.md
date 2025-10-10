@@ -28,6 +28,6 @@ Contiene:
 ### 3. `Estadistica_inferencial.ipynb`
 En este archivo se introducen los fundamentos de la **estadística inferencial**, con aplicaciones prácticas.  
 Incluye:
-- Estimadores
-- Intervalos de confianza 
+- Estimadores.
+- Intervalos de confianza. 
 - Ejercicios aplicados.
