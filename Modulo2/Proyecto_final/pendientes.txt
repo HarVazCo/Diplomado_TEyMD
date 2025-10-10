@@ -1,4 +1,0 @@
-Pendientes 4/10/2025
-Ejemplo v.a. bernoulli con parametro p
-Ejemplo v.a. geometrica con parametro p
-Ejemplo v.a. hipergeometrica
