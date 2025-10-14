@@ -35,8 +35,30 @@ $$IC = \sqrt{k}.$$
 
 ## Prueba de Chow
 ---
+La prueba de Chow nos dice si los coeficientes de una regresión son los mismos para un conjunto de datos dividido. 
+Considerando el modelo general con $k$ variables explicativas y una constante, y una muestra con dos grupos: $g=1,2$.
+$$ Y_{g} = \beta_{1,g} + \beta_{2,g}x_{2,g} + \dots + \beta_{k,g} x_{k,g} + u_g $$
+La prueba de Chow busca probar si los coeficientes y las constantes son iguales en los dos, es decir,
+$$H_0 : \beta_{1,1} = \beta_{1,2}, \beta_{2,1} = \beta_{2,2}, \dots, \beta_{k,1} = \beta_{k,2},$$
+esta hipótesis incluye $k+1$ restricciones.
 
+La prueba consiste en realizar tres estimaciones con el modelo general, una para cada grupo ($Y_1$ y $Y_2$) y la tercera para el conjunto de datos completo $(Y)$. Ya que se tienen las estimaciones, se calcula la suma de residuales cuadrados de cada uno de los modelos:
+$$\begin{align*} SRC_1 &= \sum \hat{u}_1^2 \\  SRC_2 &= \sum \hat{u}_2^2 \\ SRC &= \sum \hat{u}^2 \end{align*}.$$
 
+Ya que se tienen las sumas, se calcula el estadístico $F$ de la siguiente manera:
+$$ F = \frac{\frac{(SRC - (SRC_1 + SRC_2))}{k+1} }{\frac{SRC_1 + SRC_2}{(n_1 + n_2 - 2(k+1))} } $$
+donde $n_1$ y $n_2$ son el número de observaciones del grupo $1$ y del grupo $2$ respectivamente. 
+
+Si no hay un cambio estructural, es decir, $Y_1$ y $Y_2$ son las mismas, $SCR$ y $SCR_1+SCR_2$ no deben ser estadísticamente diferentes. Por lo tanto:
+$$ F \sim F_{[k+1,(n_1+n_2-2(k+1))]}. $$
+
+De esta manera, cuando $F$ no excede el valor crítico $ F_{[k+1,(n_1+n_2-2(k+1))]} $, no se rechaza la hipótesis nula de *estabilidad paramétrica*. Caso contrario cuando $F$ es mayor que el valor crítico $ F__{[k+1,(n_1+n_2-2(k+1))]} $, se rechaza la hipótesis nula y se concluye que $Y_1$ y $Y_2$ son diferentes.
+
+Observaciones de la prueba de Chow:
+- Se generaliza fácilmente para casos de más de un cambio estructural.
+- Dado que la prueba de Chow es simplemente una prueba F, sólo es válida bajo homocedasticidad. Primero se debe asegurar que las varianzas de los residuos de $Y_1$ y $Y_2$ son las mismas.
+- Solo dice si las regresiones son las mismas, pero no dice si difieren en las constantes o en los coeficientes.
+- Supone que se conocen los puntos de cambio estructural.
 
 ---
 ## Referencias 

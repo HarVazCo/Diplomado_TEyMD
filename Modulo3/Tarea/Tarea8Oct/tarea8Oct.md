@@ -3,7 +3,7 @@
 
 - **Histograma de frecuencias relativas**
 
-  ![Alt text](/home/hvazquez/Documentos/Diplomado_TEyMD/Modulo3/Tarea/Tarea8Oct/histograma_residuos.png "Histograma")
+  ![Alt text](histograma_residuos.png "Histograma")
   
   Podemos observar que el p-valor de la prueba $\chi^2$ es $p = 0.1669$, sin importar si consideramos una confianza de $90\%, \ 95\%$ o $99\%$, no podemos rechazar la hipótesis nula de que el residuo tienen una distribución normal. Además, la curva normal con la que se compara la distribución del residuo tiene una media $\mu = -7.105\times 10^{-16}$, al ser un valor muy pequeño podríamos considerarlo como cero.
 
@@ -79,7 +79,7 @@ Para esta prueba se parte del MLRM
 $$Y_i = \beta_1 + \beta_2x_{i2} + \dots + \beta_k x_{ik} + u_i,$$
 después se lleva a cabo la estimación 
 $$\hat{u_i}^2 = \delta_1+\delta_2x_{i2} + \dots + \delta_k x_{ik} + \nu_i$$
-y se prueba la significancia de los coeficientes de la regresión utilizando los estadísticos $F$ o $LM$.
+y se prueba la significancia de los coeficientes de la regresión utilizando $LM$.
 
 Observaciones sobre la prueba de Breusch-Pagan:
 - Permite identificar la o las variables que causan heterocedasticidad.
