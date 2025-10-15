@@ -1,4 +1,4 @@
-## Parámetros $\beta$
+## Interpretación coeficientes $\beta$
 ---
 - Modelo $\log - \log$:
 
@@ -33,7 +33,10 @@ $$IC = \sqrt{k}.$$
 
 **Regla de dedo para $IC$:** Si el $IC$ es menor a $10$ no hay un problema grave de multicolinealidad, para valores entre 10 y 30, hay multicolinealidad entre moderada y fuerte, y si excede de 30, una multicolinealidad grave.
 
-## Prueba de Chow
+## Investigación pruebas de diagnóstico
+---
+
+### Prueba de Chow
 ---
 La prueba de Chow nos dice si los coeficientes de una regresión son los mismos para un conjunto de datos dividido. 
 Considerando el modelo general con $k$ variables explicativas y una constante, y una muestra con dos grupos: $g=1,2$.
@@ -60,7 +63,7 @@ Observaciones de la prueba de Chow:
 - Solo dice si las regresiones son las mismas, pero no especifica si difieren en las constantes o en los coeficientes.
 - Supone que se conocen los puntos de cambio estructural.
 
-## Prueba RV de Quandt (QLR)
+### Prueba RV de Quandt (QLR)
 ---
 La prueba RV de Quandt permite comprobar la existencia de cambios estructurales cuando se desconoce la fecha de ruptura. El estadístico de esta prueba es el mismo que se utiliza en la prueba de Chow $(F(\tau))$, pero en este caso se calcula para un rango de fechas de ruptura $(\tau_0 \leq \tau \leq \tau_1).$ De esta manera se tiene que:
 $$ QLR = \text{max}[F(\tau_0),F(\tau_0+1),\dots,F(\tau_1)].$$ 
@@ -69,7 +72,7 @@ Observaciones de la prueba RV de Quandt:
 - No se necesita conocer el punto de quiebre.
 - Es pesada computacionalmente, ya que requiere estimar el modelo para cada posible punto de quiebre.
 
-## Prueba CUSUM
+### Prueba CUSUM
 ---
 Considerando el modelo de regresión
 $$ y_t = \pmb{x_t'\beta_t}+u_t, \ t=1,\dots,T,$$
@@ -95,7 +98,7 @@ Observaciones de la prueba CUSUM:
 - Si hay heterocedasticidad puede fallar crear falsos rechazos.
 - Como depende de las primeras $k$ observaciones, estas pueden afectar el resultado.
 
-## Prueba CUSUMSQ
+### Prueba CUSUMSQ
 ---
 Esta prueba complementa a CUSUM, y es útil especialmente cuando las $\pmb{\beta_t}$ difieren del valor constante de forma aleatoria.
 
@@ -109,7 +112,7 @@ Observaciones de la prueba CUSUMSQ:
 - Detecta cambios en los parámetros o en la media de los errores, pero no indica donde sucede el cambio.
 - Al elevar al cuadrado los residuos, los valores atípicos afectan la prueba.
 
-## Prueba RESET de Ramsey
+### Prueba RESET de Ramsey
 ---
 La prueba consiste en que si el modelo 
 $$ Y = \beta_1 + \beta_2 x_2 + \dots + \beta_k x_k + u$$
@@ -129,6 +132,76 @@ Observaciones de la prueba RESET:
 - No se necesita saber cómo está mal especificado.
 - No proporciona información de cómo proceder si se rechaza el modelo.
 - Necesita muestras grandes.
+
+## Modelo consumo de gasolina
+---
+### Pruebas de normalidad 
+
+Se realizaron pruebas de normalidad al residuo del modelo de consumo de gasolina, los resultados se muestran a continuación:
+| Nombre de la prueba | p-valor |
+| --- | :---: |
+| Doornik-Hansen | 0.29021 |
+| W de Shapiro-Wilk | 0.1556 |
+| Lilliefors | 0.04 |
+| Jarque-Bera | 0.413541 |
+| Chi-cuadrado | 0.29021 |
+
+Además de los resultados de la tabla, obtuvimos el sesgo con un valor de $-0.260777$, el exceso de curtosis con un valor de $-0.951479$ y la distribución de frecuencias del residuo.
+
+<figure>
+    <img src="hist_residuo.png" alt="Histograma residuo">
+    <figcaption>FIG 1. Distribución de frecuencias del residuo.</figcaption>
+</figure>
+
+
+Notamos que el sesgo es cercano a cero, como esperaríamos de una distribución normal, sin embargo, el exceso de curtosis parece no ser tan cercano al valor esperado. Estos valores no nos dan la suficiente información para poder decir si el comportamiento del residuo es normal. Para eso se realizaron las pruebas de la tabla. Considerando una confianza del $ 95\% $, cuatro de las cinco pruebas realizadas nos indican que efectivamente el comportamiento del residuo es normal, ya que $p>0.05$.
+
+De la gráfica también observamos que $E[\hat{u}]= -7.50017\times 10^{-15}$, al ser un número tan pequeño, es razonable considerar que $E[\hat{u}] \approx 0 $.
+
+Por lo tanto concluimos que el residuo se distribuye de manera normal, con media cero.
+
+### Pruebas de heterocedasticidad
+---
+Podemos observar la siguiente gráfica 
+
+<figure>
+    <img src="residuo.png" alt="Residuo">
+    <figcaption>FIG 2. Comportamiento del residuo a lo largo del tiempo.</figcaption>
+</figure>
+
+no se observa que la amplitud del residuo se expanda o se contraiga sistemáticamente, visualmente no hay indicios de heterocedasticidad. Sin embargo, la gráfica presentada no es una prueba formal, es por eso que se realizó la **prueba de heterocedasticidad de White** y se obtuvo un valor 
+$$p = 0.118337 ,$$
+para una confianza del $ 95\% $, podemos concluir que no hay heterocedasticidad.
+
+### Pruebas de autocorrelación 
+---
+Se realizó la **prueba LM de autocorrelación** múltiples veces, pero considerando distintos ordenes de retardo, los resultados se muestran a continuación:
+
+| Orden de retardo | p-valor |
+| --- | :--: |
+| 1 | 0.00363786 |
+| 10 | 0.100818 |
+| 13 | 0.0763843 |
+| 18 | 0.325272 |
+
+Notamos que al considerar un solo orden de retardo, la prueba indica que existe autocorrelación para una confianza del $95\% $, sin embargo, al considerar más ordenes de retardo, los resultados indican que no se puede rechazar la hipótesis nula de que no hay autocorrelación. Con base en que tres de las cuatro pruebas coinciden, consideramos que no hay autocorrelación en el residuo.
+
+### Pruebas de cambio estructural
+---
+Se realizaron varias pruebas para probar si existen cambios estructurales en los datos del modelo.
+
+- Prueba RV de Quandt:
+  De esta prueba obtenemos la gráfica 
+  <figure>
+    <img src="qlr.png" alt="Prueba de Quandt">
+    <figcaption>FIG 3. Gráfica de la prueba RV de Quandt.</figcaption>
+  </figure>
+  
+  notamos que hay en muchos años el valor del estadístico $ F $ es mayor a la linea punteada roja, y se puede ver que entre $ 1970 $ y $ 1975 $ hay un máximo, esto puede indicar cambios estructurales.
+
+  Además de la gráfica obtuvimos que "el valor máximo de $F(6, 24) = 7.10008$ corresponde a la observación $1973$" y el "Valor $p$ asintótico $= 4.80885\times 10^{-6}$", con base en lo observado en la gráfica y el valor $p$ obtenido, se puede sospechar que existen cambios estructurales.
+
+- Prueba CUSUM:
 
 ---
 ## Referencias 
