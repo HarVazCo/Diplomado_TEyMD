@@ -3,13 +3,19 @@
 
 - **Histograma de frecuencias relativas**
 
-  ![Alt text](histograma_residuos.png "Histograma")
+  <figure>
+      <img src="histograma_residuos.png" alt="Histograma residuo" width="400" height="300">
+      <figcaption>FIG 1. Distribución de frecuencias del residuo.</figcaption>
+    </figure>
   
   Podemos observar que el p-valor de la prueba $\chi^2$ es $p = 0.1669$, sin importar si consideramos una confianza de $90\%, \ 95\%$ o $99\%$, no podemos rechazar la hipótesis nula de que el residuo tienen una distribución normal. Además, la curva normal con la que se compara la distribución del residuo tiene una media $\mu = -7.105\times 10^{-16}$, al ser un valor muy pequeño podríamos considerarlo como cero.
 
-- **Gráfica de los residuos**
+- **Gráfica del residuo**
 
-  ![Alt text](grafico_residuos.png "Residuos")
+  <figure>
+      <img src="grafico_residuos.png" alt="Grafica del residuo" width="400" height="300">
+      <figcaption>FIG 2. Comportamiento del residuo a lo largo del tiempo.</figcaption>
+    </figure>
 
   Lo primero que notamos es que no se aprecia alguna tendencia, también se observa que el residuo oscila alrededor del cero, esto da indicios de media constante, y por último, no se observa que la amplitud del residuo se expanda o contraiga, es decir, no hay indicios de heterocedasticidad. Con base en la información visual que nos proporciona la gráfica, consideramos que el residuo es estacionario.
 
