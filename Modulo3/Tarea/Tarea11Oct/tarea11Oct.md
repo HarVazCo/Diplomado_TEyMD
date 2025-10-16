@@ -133,7 +133,7 @@ Observaciones de la prueba RESET:
 - No proporciona información de cómo proceder si se rechaza el modelo.
 - Necesita muestras grandes.
 
-## Modelo consumo de gasolina
+## Modelo consumo de gasolina en tasas
 ---
 ### Pruebas de normalidad 
 ---
@@ -141,13 +141,13 @@ Observaciones de la prueba RESET:
 Se realizaron pruebas de normalidad al residuo del modelo de consumo de gasolina, los resultados se muestran a continuación:
 | Nombre de la prueba | p-valor |
 | --- | :---: |
-| Doornik-Hansen | 0.29021 |
-| W de Shapiro-Wilk | 0.1556 |
+| Doornik-Hansen | 0.166905 |
+| W de Shapiro-Wilk | 0.130684 |
 | Lilliefors | 0.04 |
-| Jarque-Bera | 0.413541 |
-| Chi-cuadrado | 0.29021 |
+| Jarque-Bera | 0.173408 |
+| Chi-cuadrado | 0.166905 |
 
-Además de los resultados de la tabla, obtuvimos el sesgo con un valor de $-0.260777$, el exceso de curtosis con un valor de $-0.951479$ y la distribución de frecuencias del residuo.
+Además de los resultados de la tabla, obtuvimos el sesgo con un valor de $-0.688357$, el exceso de curtosis con un valor de $0.712426$ y la distribución de frecuencias del residuo.
 
 <figure>
     <img src="hist_residuo.png" alt="Histograma residuo" width="400" height="300">
@@ -155,9 +155,9 @@ Además de los resultados de la tabla, obtuvimos el sesgo con un valor de $-0.26
 </figure>
 
 
-Notamos que el sesgo es cercano a cero, como esperaríamos de una distribución normal, sin embargo, el exceso de curtosis parece no ser tan cercano al valor esperado. Estos valores no nos dan la suficiente información para poder decir si el comportamiento del residuo es normal. Para eso se realizaron las pruebas de la tabla. Considerando una confianza del $ 95\% $, cuatro de las cinco pruebas realizadas nos indican que efectivamente el comportamiento del residuo es normal, ya que $p>0.05$.
+Notamos que el sesgo y el exceso de curtosis parecen ser razonablemente cercanos a cero, como se esperaría de una distribución normal. Estos valores no nos dan la suficiente información para poder decir si el comportamiento del residuo es normal. Para eso se realizaron las pruebas de la tabla. Considerando una confianza del $ 95\% $, cuatro de las cinco pruebas realizadas nos indican que efectivamente el comportamiento del residuo es normal, ya que $p>0.05$.
 
-De la gráfica también observamos que $E[\hat{u}]= -7.50017\times 10^{-15}$, al ser un número tan pequeño, es razonable considerar que $E[\hat{u}] \approx 0 $.
+De la gráfica también observamos que $E[\hat{u}]= -7.10543\times 10^{-16}$, al ser un número tan pequeño, es razonable considerar que $E[\hat{u}] \approx 0 $.
 
 Por lo tanto concluimos que el residuo se distribuye de manera normal, con media cero.
 
@@ -171,8 +171,14 @@ Podemos observar la siguiente gráfica
 </figure>
 
 no se observa que la amplitud del residuo se expanda o se contraiga sistemáticamente, visualmente no hay indicios de heterocedasticidad. Sin embargo, la gráfica presentada no es una prueba formal, es por eso que se realizó la **prueba de heterocedasticidad de White** y se obtuvo un valor 
-$$p = 0.118337 ,$$
-para una confianza del $ 95\% $, podemos concluir que no hay heterocedasticidad.
+$$p = 0.065907 ,$$
+para una confianza del $ 95\% $, no podemos rechazar la hipótesis nula de no heterocedasticidad.
+
+Adicionalmente, se realizó la **prueba de heterocedasticidad de White (cuadrados sólo)** y se obtuvo un valor 
+$$ p = 0.128486, $$
+en este caso tampoco podemos rechazar la hipótesis nula.
+
+Con base en las observaciones de la gráfica y en los resultados de las dos pruebas formales realizadas, podemos concluir que no hay heterocedasticidad.
 
 ### Pruebas de autocorrelación 
 ---
@@ -181,25 +187,24 @@ para una confianza del $ 95\% $, podemos concluir que no hay heterocedasticidad.
 
 | Orden de retardo | p-valor |
 | --- | :--: |
-| 1 | 0.00363786 |
-| 10 | 0.100818 |
-| 13 | 0.0763843 |
-| 18 | 0.325272 |
+| 1 | 0.92479 |
+| 5 | 0.407266 |
+| 10 | 0.246433 |
+| 18 | 0.876064 |
 
-  Notamos que al considerar un solo orden de retardo, la prueba indica que existe autocorrelación para una confianza del $95\% $, sin embargo, al considerar más ordenes de retardo, los resultados indican que no se puede rechazar la hipótesis nula de que no hay autocorrelación.
+  Notamos que para los cuatro ordenes de retardo considerados, los resultados indican que no se puede rechazar la hipótesis nula de que no hay autocorrelación, para una confianza del $95\% $.
 
 - Durbin-Watson:
   La prueba de Durbin-Watson nos dio los siguientes resultados:
 
   | $H_1$ | p-valor |
   | --- | :--: |
-  | autocorrelación positiva | $2.56542\times 10^{-6}$ |
-  | autocorrelación negativa | 0.999997 |
+  | autocorrelación positiva | 0.343808 |
+  | autocorrelación negativa | 0.656192 |
    
-  Considerando una confianza del $95 \% $ Durbin-Watson nos dice que existe autocorrelación en el residuo y esta es positiva.
+  Considerando una confianza del $95 \% $ Durbin-Watson nos dice que no podemos rechazar la hipótesis nula de no autocorrelación.
 
-Notamos que Durbin-Watson y la prueba LM con un orden de retardo nos dicen que existe la autocorrelación en el residuo, sin embargo, es necesario mencionar que ambas pruebas solo consideran un orden de retardo. Cuando consideramos más ordenes de retardo, los resultados cambiaron. El supuesto considera la autocorrelación de $u_i$ con $u_j$, cuando $i\neq j$, es decir, la autocorrelación del residuo con cualquier orden de retardo, no solo el primer retardo, por lo tanto se considera que los resultados obtenidos cuando se consideran más ordenes de retardo están más apegados al supuesto. Por lo tanto se concluye que no hay autocorrelación en el residuo.
-
+Notamos que Durbin-Watson y las pruebas LM realizadas coinciden en la conclusión, por lo tanto podemos decir que no hay correlación en el residuo.
 
 ### Pruebas de cambio estructural
 ---
@@ -212,54 +217,62 @@ Se realizaron varias pruebas para probar si existen cambios estructurales en los
     <figcaption>FIG 3. Gráfica de la prueba RV de Quandt.</figcaption>
   </figure>
 
-  notamos que hay en muchos años el valor del estadístico $ F $ es mayor a la linea punteada roja, y se puede ver que entre $ 1970 $ y $ 1975 $ hay un máximo, esto puede indicar cambios estructurales.
+  notamos que durante todos los años el valor del estadístico $ F $ esta por debajo de la linea punteada roja, esto nos da indicios de que puede que no existan cambios estructurales.
 
-  Además de la gráfica obtuvimos que "el valor máximo de $F(6, 24) = 7.10008$ corresponde a la observación $1973$" y el "Valor $p$ asintótico $= 4.80885\times 10^{-6}$", con base en lo observado en la gráfica y el valor $p$ obtenido, se puede sospechar que existen cambios estructurales.
+  Además de la gráfica obtuvimos que el "valor $p$ asintótico $= 0.25919$", con base en lo observado en la gráfica y el valor $p$ obtenido, decimos que se sospecha que no existen cambios estructurales.
 
 - Prueba CUSUM:
-  Se llevó a cabo la prueba CUSUM de la cual se obtuvo un valor $p =0.23491$ y la siguiente gráfica:
+  Se llevó a cabo la prueba CUSUM de la cual se obtuvo un valor $p =0.00448088$ y la siguiente gráfica:
   <figure>
     <img src="cusum.png" alt="Prueba CUSUM" width="400" height="300">
     <figcaption>FIG 4. Prueba CUSUM.</figcaption>
   </figure>
 
-  no se observa que ninguno de los puntos cruce las lineas rectas, estas observaciones junto con el valor $p$ indican que no se puede rechazar la hipótesis nula de que no hay cambio estructural con una confianza del $95 \% $.
+  se observa que existen puntos que cruzan las lineas rectas, más específicamente de $1982$ a $1995$, estas observaciones junto con el valor $p$ indican que para esta prueba se rechaza la hipótesis nula de que no hay cambio estructural con una confianza del $95 \% $. 
+
 
 - Prueba CUSUMSQ:
-  De esta prueba se obtuvo lo siguiente:
+  Con el fin de obtener aún más informacion se realizó la prueba CUSUMSQ y se obtuvo lo siguiente:
   <figure>
     <img src="cusumsq.png" alt="Prueba CUSUMSQ" width="400" height="300">
     <figcaption>FIG 5. Prueba CUSUMSQ.</figcaption>
   </figure>
 
-  en esta gráfica tampoco se observa que ninguno de los puntos cruce las lineas rectas, por lo que no se puede rechazar la hipótesis nula.
+  en esta gráfica se observa que ninguno de los puntos cruza las lineas rectas, por lo que no se puede rechazar la hipótesis nula. 
 
 - Prueba de Chow:
-  Sabemos que para la prueba de Chow necesitamos un año en el que se sospeche que existe cambio estructural, la prueba se realizó para el año $1973$ y se obtuvo un valor 
-  $$ p = 0.000194631, $$
-  Chow indica que existe un cambio estructural en $1973$.
+  Sabemos que para la prueba de Chow necesitamos un año en el que se sospeche que existe cambio estructural, la prueba se realizó para los siguientes años 
 
-Se obtuvo que la prueba de Chow y RV de Quandt indican que hay cambio estructural, sin embargo, hay que recordar que en el fondo la prueba de Quandt es la de Chow aplicado a muchos puntos, por lo que se puede considerar como una misma prueba, además se realizaron las pruebas CUSUM y CUSUMSQ, las cuales mostraron que no se puede rechazar la hipótesis de que no hay cambio estructural. Debido a que consideramos a Chow y RV de Quandt como "una misma", se tiene que dos de las tres pruebas realizadas nos llevan a concluir que no hay cambio estructural.
+  | Año | p-valor |
+  | :--: | :--: |
+  | 1980 | 0.302679 |
+  | 1981 | 0.575158 |
+  | 1982 | 0.574472 |
+  | 1983 | 0.710725 | 
 
-### Pruebas de correcta especificación 
+  Chow indica que no podemos rechazar la hipótesis nula de que no hay cambio estructural.
+
+Se obtuvo que la prueba CUSUM indica que hay cambio estructural, sin embargo, la prueba RV de Quandt y CUSUMSQ coinciden en que no se puede rechazar la hipótesis nula. Además se realizaron pruebas de Chow alrededor de los puntos donde se ve que se cruzan las lineas en la gráfica de CUSUM, con el objetivo de probar si hay cambio estructural, los reultados coinciden con RV de Quandt y CUSUMSQ. Por lo tanto concluimos que no hay evidencia de cambio estructural. 
+
+### Pruebas de forma funcional lineal 
 ---
 
 - RESET de Ramsey (solo cuadrados):
   De esta prueba se obtuvo un valor 
-  $$ p = 0.02456,$$
-  considerando una confianza del $95\% $, los resultados nos indican que debemos rechazar la hipótesis nula de especificación adecuada.
+  $$ p = 0.789,$$
+  considerando una confianza del $95\% $, los resultados nos indican que no podemos rechazar la hipótesis nula de especificación adecuada.
 
 - Prueba de no linealidad (cuadrados):
   En este caso se obtuvo el valor
-  $$p=0.000362253,$$
-  por lo que rechazamos la hipótesis nula de que la relación es lineal, considerando una confianza del $95\% $.
+  $$p = 0.15713,$$
+  por lo que no podemos rechazar la hipótesis nula de que la relación es lineal, considerando una confianza del $95\% $.
 
 - RESET de Ramsey (solo cubos):
   El valor $p$ obtenido para esta versión de la prueba RESET es
-  $$p=0.0906308,$$
+  $$p=0.503,$$
   es decir, considerando una confianza del $95\% $, no se puede rechazar la hipótesis nula de correcta especificación.
 
-Tomando en cuenta los resultados obtenidos en las tres pruebas realizadas, se concluye que el modelo tiene errores de especificación, ya que dos de las tres pruebas así lo indican, además, es razonable pensar que la variable dependiente depende de alguna de las variables explicativas de forma cuadrada.
+Tomando en cuenta los resultados obtenidos en las tres pruebas realizadas, se concluye que el modelo tiene una forma funcional lineal.
 
 
 ---
