@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1760754713.93221 "/home/hvazquez/Documentos/Diplomado_TEyMD/Modulo3/Tarea/Tarea15Oct/tarea15Oct.tex" "tarea15Oct.pdf" "tarea15Oct" 1760754714.48968 0
-  "/home/hvazquez/Documentos/Diplomado_TEyMD/Modulo3/Tarea/Tarea15Oct/tarea15Oct.tex" 1760754713.66215 4250 f30afbd8f03b59a5f4ae230df5e7e48d ""
+["pdflatex"] 1760755201.34776 "/home/hvazquez/Documentos/Diplomado_TEyMD/Modulo3/Tarea/Tarea15Oct/tarea15Oct.tex" "tarea15Oct.pdf" "tarea15Oct" 1760755201.91326 0
+  "/home/hvazquez/Documentos/Diplomado_TEyMD/Modulo3/Tarea/Tarea15Oct/tarea15Oct.tex" 1760755201.06045 4432 1282020a383b211586069145838edc1a ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
@@ -69,6 +69,7 @@
   "/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty" 1737590400 5119 4ce42f43368f652f9c9522d943cce8e4 ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty" 1737590400 5048 84b05796b49b69e2d4257d537721c960 ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo" 1737590400 8449 c314623021fbddd0180c05345324933c ""
+  "/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty" 1579038678 6078 f1cb470c9199e7110a27851508ed7a5c ""
   "/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty" 1561238569 51697 f8f08183cd2080d9d18a41432d651dfb ""
   "/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty" 1579991033 13886 d1306dcf79a944f6988e688c1785f9ce ""
   "/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty" 1668028059 18450 88279bf67c81e69f8e3f1c1bad1a26c5 ""
@@ -100,9 +101,9 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1737590400 40900 887e0dc8cac988a9e9c574af364cf837 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1760592716.34501 534798 ec489c74f70575308ccb674527c3268b ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1760592624 7572840 3831a84fbfb4869a1521671cc3915d87 ""
-  "tarea15Oct.aux" 1760754714.38416 869 74c6f85503949005c938c8a4b0aafc46 "pdflatex"
-  "tarea15Oct.out" 1760754714.35437 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "tarea15Oct.tex" 1760754713.66215 4250 f30afbd8f03b59a5f4ae230df5e7e48d ""
+  "tarea15Oct.aux" 1760755201.81975 869 74c6f85503949005c938c8a4b0aafc46 "pdflatex"
+  "tarea15Oct.out" 1760755201.79075 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "tarea15Oct.tex" 1760755201.06045 4432 1282020a383b211586069145838edc1a ""
   (generated)
   "tarea15Oct.aux"
   "tarea15Oct.log"

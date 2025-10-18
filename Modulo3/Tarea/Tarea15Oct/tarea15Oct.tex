@@ -5,7 +5,8 @@
 % ------------------------------
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[spanish]{babel}
+\usepackage[spanish, es-nodecimaldot]{babel} % <- punto decimal
+\decimalpoint
 \usepackage{amsmath, amssymb, amsfonts}
 \usepackage{graphicx}
 \usepackage{geometry}
@@ -13,6 +14,7 @@
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{booktabs} % tablas bonitas
 
 % ------------------------------
 % CONFIGURACIÓN GENERAL
@@ -20,6 +22,9 @@
 \geometry{letterpaper, margin=2.5cm}
 \setlength{\parskip}{0.5em}
 \setlength{\parindent}{0pt}
+
+% Cambiar "Cuadro" por "Tabla"
+\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
 
 % ------------------------------
 % ENCABEZADO Y PIE DE PÁGINA
@@ -68,7 +73,7 @@ y $pc\_Pg$, $pc\_Y$, $pc\_Pnc$, $pc\_Puc$, $pc\_Ppt$, $pc\_Pd$, $pc\_Pn$,
  eliminadas fueron: $pc\_Pnc$, $pc\_Ppt$, $pc\_Pn$, $pc\_Ps$ y $pc\_Pop$.\\
  A las variables eliminadas se les hizo una prueba $F$ de significancia 
  conjunta bajo la hipótesis nula $H_0$: los parámetros son cero para las
- variables. El resultado de la prueba fue un valor $p=0.225012$, considerando
+ variables. El resultado de la prueba fue un valor $$p=0.225012,$$ considerando
  una confianza del $95\%$ no podemos rechazar la hipótesis nula.\\
  Además de la prueba de significancia conjunta, también tenemos los criterios
  de información de Akaike, Hannan-Quinn y Schwarz, con los siguientes valores:
@@ -101,7 +106,7 @@ reducido que consta de $pc\_G$ como variable dependiente y $pc\_Pg$, $pc\_Y$,
 $pc\_Puc$ y $pc_Pd$ como variables independientes. Después se llevó a cabo
 la adición de las variables $pc\_Pnc$, $pc\_Ppt$, $pc\_Pn$, $pc\_Ps$ y $pc\_Pop$,
 a las cuales se les hizo una prueba $F$ de significancia conjunta. EL resultado
-de la prueba fue un valor $p=0.225012$, considerando una confianza del $95\%$
+de la prueba fue un valor $$p=0.225012,$$ considerando una confianza del $95\%$
 no podemos rechazar la hipótesis nula $H_0$: los parámetros son cero para las
 variables añadidas.\\
 Además de la prueba de significancia conjunta, gretl menciona que al añadir
