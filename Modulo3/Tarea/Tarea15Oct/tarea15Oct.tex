@@ -1,0 +1,116 @@
+\documentclass[12pt]{article}
+
+% ------------------------------
+% PAQUETES BÁSICOS
+% ------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% ------------------------------
+% CONFIGURACIÓN GENERAL
+% ------------------------------
+\geometry{letterpaper, margin=2.5cm}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+% ------------------------------
+% ENCABEZADO Y PIE DE PÁGINA
+% ------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\chead{\textbf{Técnicas Estadísticas y Minería de Datos}}
+
+
+% Pie de página con línea superior
+\renewcommand{\footrulewidth}{0.4pt} % grosor de la línea (0 para quitarla)
+\rfoot{\thepage}
+\lfoot{\textbf{Harold Vázquez Corrilo}}
+% ------------------------------
+% COLORES Y LINKS
+% ------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    urlcolor=blue!60!black,
+    citecolor=blue!60!black
+}
+
+% ------------------------------
+% INICIO DEL DOCUMENTO
+% ------------------------------
+\begin{document}
+
+%\begin{center}
+ %   {\LARGE \textbf{Tarea 1}}\\[4pt]
+  %  {\large Curso: Nombre del curso}\\[2pt]
+   % {\large Profesor: Nombre del profesor}\\[2pt]
+    %{\large Fecha: \today}
+%\end{center}
+
+%\hrule
+%\vspace{1em}
+
+\subsection*{Omisión de variables relevantes}
+
+Para la prueba de omisión de variables relevantes se considero el modelo de 
+regresión lineal múltiple con $pc\_G$ como variable dependiente 
+y $pc\_Pg$, $pc\_Y$, $pc\_Pnc$, $pc\_Puc$, $pc\_Ppt$, $pc\_Pd$, $pc\_Pn$,
+ $pc\_Ps$ y $pc\_Pop$ como variables independientes. Después se llevó a cabo
+ eliminación secuencial hasta llegar al modelo reducido, las variables 
+ eliminadas fueron: $pc\_Pnc$, $pc\_Ppt$, $pc\_Pn$, $pc\_Ps$ y $pc\_Pop$.\\
+ A las variables eliminadas se les hizo una prueba $F$ de significancia 
+ conjunta bajo la hipótesis nula $H_0$: los parámetros son cero para las
+ variables. El resultado de la prueba fue un valor $p=0.225012$, considerando
+ una confianza del $95\%$ no podemos rechazar la hipótesis nula.\\
+ Además de la prueba de significancia conjunta, también tenemos los criterios
+ de información de Akaike, Hannan-Quinn y Schwarz, con los siguientes valores:
+
+ \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \hline
+        \textbf{Criterio} & \textbf{Modelo Completo} & \textbf{Modelo Reducido} \\
+        \hline
+        Akaike & 141.8180 & 141.0091 \\
+        Hannan-Quinn & 147.1870 & 143.6936 \\
+        Schwartz & 157.3714 & 148.7858 \\
+        \hline
+        \hline
+    \end{tabular}
+    \caption{Criterios de información para ambos modelos}
+ \end{table}
+
+Notamos que en los tres casos los valores son menores para el modelo reducido,
+lo que indica que el modelo reducido es mejor que el modelo completo.\\
+Por lo tanto, con base en la prueba de significancia conjunta realizada a
+las variables eliminadas y en los criterios de información, concluimos
+que en el modelo reducido no se omiten variables relevantes.
+
+\subsection*{Adición de variables irrelevantes}
+Para la prueba de adición de variables irrelevantes se consideró el modelo
+reducido que consta de $pc\_G$ como variable dependiente y $pc\_Pg$, $pc\_Y$,
+$pc\_Puc$ y $pc_Pd$ como variables independientes. Después se llevó a cabo
+la adición de las variables $pc\_Pnc$, $pc\_Ppt$, $pc\_Pn$, $pc\_Ps$ y $pc\_Pop$,
+a las cuales se les hizo una prueba $F$ de significancia conjunta. EL resultado
+de la prueba fue un valor $p=0.225012$, considerando una confianza del $95\%$
+no podemos rechazar la hipótesis nula $H_0$: los parámetros son cero para las
+variables añadidas.\\
+Además de la prueba de significancia conjunta, gretl menciona que al añadir
+las variables, no mejora ninguno de los criterios de información
+(Akaike, Hannan-Quinn y Schwarz).\\
+Con base en la prueba de significancia conjunta y en los criterios de información,
+concluimos que el mejor modelo es al que no se le añaden variables.
+
+% ------------------------------
+% FIN DEL DOCUMENTO
+% ------------------------------
+\end{document}
