@@ -1,0 +1,184 @@
+\documentclass[12pt]{article}
+
+% ------------------------------
+% PAQUETES BÁSICOS
+% ------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-nodecimaldot]{babel} % <- punto decimal
+\decimalpoint
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage[
+    backend=biber,
+    style=numeric,
+    sorting=none
+]{biblatex}
+\addbibresource{biblio.bib}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{booktabs} % tablas bonitas
+
+% ------------------------------
+% CONFIGURACIÓN GENERAL
+% ------------------------------
+\geometry{letterpaper, margin=2.5cm}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+% Cambiar "Cuadro" por "Tabla"
+\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
+
+% ------------------------------
+% ENCABEZADO Y PIE DE PÁGINA
+% ------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\chead{\textbf{Técnicas Estadísticas y Minería de Datos}}
+%\lhead{\textbf{TEyMD}}
+%\rhead{\textbf{Tarea 5}}
+
+
+% Pie de página con línea superior
+\renewcommand{\footrulewidth}{0.4pt} % grosor de la línea (0 para quitarla)
+\rfoot{\thepage}
+\lfoot{\textbf{Harold Vázquez Corrilo}}
+% ------------------------------
+% COLORES Y LINKS
+% ------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    urlcolor=blue!60!black,
+    citecolor=green!60!black
+}
+
+% ------------------------------
+% INICIO DEL DOCUMENTO
+% ------------------------------
+\begin{document}
+
+%\begin{center}
+ %   {\LARGE \textbf{Tarea 1}}\\[4pt]
+  %  {\large Curso: Nombre del curso}\\[2pt]
+   % {\large Profesor: Nombre del profesor}\\[2pt]
+    %{\large Fecha: \today}
+%\end{center}
+
+%\hrule
+%\vspace{1em}
+
+
+%%%%%%
+%% Tema: R cuadrada y R cuadrada ajustada
+%%%%%%
+
+\subsection*{$R^2$ y $R^2$ ajustada}
+\begin{itemize}
+    \item $R^2$: Se le llama \textit{coeficiente de determinación} y se interpreta como la proporción de la variación muestral
+    de $y$ que es explicada por el modelo de regresión, es decir, qué tan bien se ajusta el modelo a los datos observados \cite{wooldridge_introductory_2009}.\\
+    Recordando el modelo de regresión lineal 
+    \begin{equation}
+        \pmb{Y = X\beta + u = \hat{Y} + u}
+        \label{eq:modelo_regresion}
+    \end{equation}
+    para una sola observación se tiene que 
+    \begin{equation}
+        y_i = \hat{y}_i + u_i = \pmb{x}_i \pmb{\beta} + u_i
+        \label{eq:modelo_regresion_i}
+    \end{equation}
+    haciendo el desarrollo algebraico (ver \cite{greene_econometric_2012}) se llega a la expresión de $R^2$ como:
+    
+    \begin{equation}
+        R^2 = 1 - \frac{SRC}{STC} = 1 - \frac{\pmb{u'u}}{\pmb{y'M^0y}} = 
+        1 - \frac{\sum_{i=1}^{n} u_i^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2},
+        \label{eq:r_cuadrado}
+    \end{equation}
+
+    donde $SRC$ es la suma de los residuos al cuadrado, $STC$ es la suma total de cuadrados y
+    $\pmb{M^0}$ es la \textit{matriz de centrado} o \textit{matriz de desviaciones respecto a la media}.\\
+    Durante el desarrollo de la ecuación \eqref{eq:r_cuadrado} se utilizan propiedades que requieren
+    que $\pmb{X}$ tenga una columna de unos (intercepto) ya que de lo contrario al calcular el $R^2$, el 
+    resultado es impredecible. Nunca será mayor y puede ser mucho menor que la misma cifra calculada para 
+    la regresión con un término constante incluido. Incluso puede ser negativo \cite{greene_econometric_2012}.\\
+    Es importante mencionar que el $R^2$ mide la bondad de ajuste dentro de la muestra, en el sentido de conocer 
+    la cercanía entre un valor $Y$ estimado y su valor real en la muestra dada. No hay garantía de que pronosticará 
+    bien las observaciones fuera de la muestra.
+    
+    \item $R^2$ ajustada $(\bar{R}^2)$: Se le llama \textit{coeficiente de determinación ajustado} y es una versión 
+    modificada del $R^2$ y se desarrolla a partir de los problemas que presenta el $R^2$ al 
+    al analizar la bondad del ajuste. Uno de ellos es que el $R^2$ siempre aumenta al agregar 
+    variables a la regresión. El $R^2$ ajustada penaliza la inclusión de variables en el modelo y se 
+    calcula como:
+    \begin{equation}
+        \bar{R}^2 = 1 - \frac{SRC/(n-k)}{STC/(n-1)} = 1 - \frac{\pmb{u'u}/(n-k)}{\pmb{y'M^0y}/(n-1)} 
+        = 1 - \frac{\sum_{i=1}^{n} u_i^2/(n-k)}{\sum_{i=1}^{n} (y_i - \bar{y})^2/(n-1)},
+        \label{eq:r_cuadrado_ajustada}
+    \end{equation}
+    donde n es el número de observaciones y k es el número de parámetros estimados.
+\end{itemize}
+
+%%%%%%%
+%% Tema: Criterios de información
+%%%%%%%
+
+\subsection*{Criterios de información}
+\begin{itemize}
+    \item Criterio de Información de Akaike $(CIA)$: Es una medida utilizada para comparar modelos estadísticos, también utiliza
+    la idea de una penalización por añadir mas variables, se define como \cite{gujarati_econometri_2015}:
+    \begin{equation}
+        CIA = e^{2k/n} \frac{SRC}{n} = e^{2k/n} \frac{\pmb{u'u}}{n},
+        \label{eq:cia}
+    \end{equation}
+    la expresión logaritmica muchas veces es más útil
+    \begin{equation}
+        \ln(CIA) = \frac{2k}{n} + \ln\left(\frac{SRC}{n}\right) = \frac{2k}{n} + \ln\left(\frac{\pmb{u'u}}{n}\right).
+        \label{eq:ln_cia}
+    \end{equation}
+    también se puede expresar en términos del valor máximo de la función de verosimilitud $(\hat{L})$ \cite{greene_econometric_2012}:
+    \begin{equation}
+        CIA = -2 \ln(\hat{L}) + 2k.
+        \label{eq:cia_verosimilitud}
+    \end{equation}
+    Al comparar dos o más modelos, se preferirá el que tenga el menor valor CIA. 
+    Una ventaja del CIA es que resulta útil no sólo para el desempeño de la predicción dentro de la muestra, 
+    sino también para el de la predicción fuera de la muestra de un modelo de regresión. \cite{gujarati_econometri_2015}
+
+    \item Criterio de información de Schwarz $(CIS)$: Similar al criterio de Akaike,
+    pero impone una penalización mayor con un factor $(k/n)\ln(n)$ en lugar de $2k/n$ \cite{gujarati_econometri_2015}: 
+    \begin{equation}
+        \ln(CIS) = \frac{k}{n} \ln(n) + \ln\left(\frac{SRC}{n}\right) = \frac{k}{n} \ln(n) + \ln\left(\frac{\pmb{u'u}}{n}\right),
+        \label{eq:cis}
+    \end{equation}
+    o en términos del valor máximo de la función de verosimilitud \cite{greene_econometric_2012}:
+    \begin{equation}
+        CIS = -2 \ln(\hat{L}) + k \ln(n).
+        \label{eq:cis_verosimilitud}
+    \end{equation}
+    Al igual que en CIA, mientras más pequeño sea el valor de CIS, mejor será el modelo. 
+    De nuevo, al igual que en CIA, CIS sirve para comparar el desempeño del pronóstico 
+    dentro de la muestra y fuera de la muestra de un modelo.
+
+    \item Criterio de información de Hannan-Quinn $(CIHQ)$: El criterio de información de Hannan-Quinn
+    también penaliza la adición de variables, pero con un factor intermedio entre los dos anteriores, 
+    es decir, que el factor crece más rápido que $2k/n$ pero más lento que $(k/n)\ln(n)$ 
+    y se define de la siguiente manera \cite{hannan_determination_1979}:
+    \begin{equation}
+        CIHQ = -2 \ln(\hat{L}) + 2k\ln(\ln(n)) 
+        \label{eq:cihq}
+    \end{equation}
+    donde $\hat{L}$ es el valor máximo de la función de verosimilitud, $k$ es el número de parámetros estimados 
+    y $n$ es el número de observaciones.\\
+    Al igual que en los casos anteriores, se prefiere el modelo con el valor más bajo de CIHQ.
+\end{itemize}
+
+\printbibliography
+
+% ------------------------------
+% FIN DEL DOCUMENTO
+% ------------------------------
+\end{document}
