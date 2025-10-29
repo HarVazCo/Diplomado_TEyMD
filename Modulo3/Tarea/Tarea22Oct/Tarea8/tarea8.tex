@@ -89,7 +89,7 @@
         \pmb{y}_t = \m{\mu} + \m{A}_1 \m{y}_{t-1} + \m{A}_2 \m{y}_{t-2} + ... + \m{A}_p \m{y}_{t-p} + \m{\varepsilon}_t,
         \label{eq:var}
     \end{align}
-    donde $\pmb{y_t}$ es un vector de $M$ variables integradas de orden uno $(I(0))$ que se creen cointegradas,
+    donde $\pmb{y_t}$ es un vector de $M$ variables integradas de orden uno $I(1)$ que se creen cointegradas,
     $\pmb{\mu}$ es un vector de constantes, $\m{A}_i$ son matrices de coeficientes y 
     $\pmb{\varepsilon_t}$ es un vector de errores blancos. La expresión \eqref{eq:var} se puede reescribir 
     en forma de corrección de errores (VEC) como:
@@ -138,7 +138,53 @@
 %%%%%%%%%%%%%%%%%%%
 
 \subsection*{Diagnóstico del modelo con MCE}
-Se realizó el diagnóstico del modelo con MCE de la data 3-6, las pruebas realizadas y los resultados obtenidos se muestran a continuación.
+Se realizó el diagnóstico del modelo con MCE de la data 3-6 (ver figura \ref{fig:mce_modelo}), las pruebas realizadas y los resultados obtenidos se muestran a continuación.
+\begin{figure}[h!]
+    \begin{center}
+
+        Modelo 2: MCO, usando las observaciones 1960--1994 ($T$ = 35)\\
+        Variable dependiente: pc\_Ct\\
+        
+        \vspace{1em}
+        
+        \begin{tabular}{lr@{.}lr@{.}lr@{.}lr@{.}l}
+          &
+         \multicolumn{2}{c}{Coeficiente} &
+          \multicolumn{2}{c}{Desv.\ Típica} &
+           \multicolumn{2}{c}{Estadístico $t$} &
+            \multicolumn{2}{c}{valor p} \\[1ex]
+        const &
+          0&406198 &
+            0&271409 &
+              1&497 &
+                0&1443 \\
+        pc\_Yt &
+          0&839422 &
+            0&0939651 &
+              8&933 &
+                0&0000 \\
+        mce\_1 &
+          $-$0&00179869 &
+            0&000977668 &
+              $-$1&840 &
+                0&0751 \\
+        \end{tabular}
+        
+        \vspace{1ex}
+        \begin{tabular}{lrlr}
+        Media de la vble. dep. &  2.265466 & D.T. de la vble. dep. &  1.878602 \\
+        Suma de cuad. residuos &  34.22190 & D.T. de la regresión &  1.034135 \\
+        $R^2$ &  0.714796 & $R^2$ corregido &  0.696971 \\
+        $F(2, 32)$ &  40.10019 & Valor p (de $F$) &  1.92\textrm{e--09} \\
+        Log-verosimilitud & $-$49.26941 & Criterio de Akaike &  104.5388 \\
+        Criterio de Schwarz &  109.2049 & Hannan--Quinn &  106.1495 \\
+        $\hat{\rho}$ &  0.017734 & Durbin--Watson &  1.926095 \\
+        \end{tabular}
+        \end{center}
+    \caption{Modelo con MCE de la data 3-6.}
+    \label{fig:mce_modelo}     
+\end{figure}
+
 \begin{itemize}
     \item \textbf{Pruebas de normalidad y media cero:}\\
     Se realizaron distintas pruebas para determinar si los residuos del modelo con MCE siguen una distribución normal.\\
@@ -221,8 +267,8 @@ Se realizó el diagnóstico del modelo con MCE de la data 3-6, las pruebas reali
     Se realizó la prueba de multicolinealidad calculando el factor de inflación de la varianza (VIF) para las variables explicativas,
     obteniéndose los siguientes resultados:
     \begin{itemize}
-        \item VIF de $\Delta Yt$: 1.019
-        \item VIF de $\text{mce}_{-1}$: 1.019
+        \item VIF de $pc\_Yt$: 1.019
+        \item VIF de $\text{mce}\_1$: 1.019
     \end{itemize}
     Sabemos que un valor de VIF menor a 10 indica que el grado de multicolinealidad es bajo. Dado que ambos valores de VIF son cercanos a 1,
     concluimos que no hay multicolinealidad entre las variables explicativas del modelo.
