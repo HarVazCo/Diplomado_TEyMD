@@ -1,0 +1,361 @@
+\documentclass[12pt]{article}
+
+% ------------------------------
+% PAQUETES BÁSICOS
+% ------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-nodecimaldot]{babel} % <- punto decimal
+\decimalpoint
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage[
+    backend=biber,
+    style=numeric,
+    sorting=none
+]{biblatex}
+\addbibresource{biblio.bib}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{booktabs} % tablas bonitas
+
+% ------------------------------
+% CONFIGURACIÓN GENERAL
+% ------------------------------
+\geometry{letterpaper, margin=2.5cm}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+% Cambiar "Cuadro" por "Tabla"
+\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
+
+% ------------------------------
+% ENCABEZADO Y PIE DE PÁGINA
+% ------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\chead{\textbf{Técnicas Estadísticas y Minería de Datos}}
+%\lhead{\textbf{TEyMD}}
+%\rhead{\textbf{Tarea 5}}
+
+
+% Pie de página con línea superior
+\renewcommand{\footrulewidth}{0.4pt} % grosor de la línea (0 para quitarla)
+\rfoot{\thepage}
+\lfoot{\textbf{Harold Vázquez Corrilo}}
+% ------------------------------
+% COLORES Y LINKS
+% ------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    urlcolor=blue!60!black,
+    citecolor=green!60!black
+}
+
+% ------------------------------
+% INICIO DEL DOCUMENTO
+% ------------------------------
+\begin{document}
+
+%\begin{center}
+ %   {\LARGE \textbf{Tarea 1}}\\[4pt]
+  %  {\large Curso: Nombre del curso}\\[2pt]
+   % {\large Profesor: Nombre del profesor}\\[2pt]
+    %{\large Fecha: \today}
+%\end{center}
+
+%\hrule
+%\vspace{1em}
+\newcommand{\m}[1]{\pmb{#1}} % comando para vectores y matrices en negrita
+
+
+%%%%%%
+%% Tema: Ji cuadrada
+%%%%%%
+
+\subsection*{Forma funcional lineal}
+
+Se utilizaron las variables de la data \textbf{greene11\_3} en tasas de crecimiento para estimar el siguiente modelo de regresión lineal:
+\begin{center}
+
+    Modelo 1: MCO, usando las observaciones 1951--1985 ($T$ = 35)\\
+    Variable dependiente: pc\_C\\
+    
+    \vspace{1em}
+    
+    \begin{tabular}{lr@{.}lr@{.}lr@{.}lr@{.}l}
+      &
+     \multicolumn{2}{c}{Coeficiente} &
+      \multicolumn{2}{c}{Desv.\ Típica} &
+       \multicolumn{2}{c}{Estadístico $t$} &
+        \multicolumn{2}{c}{valor p} \\[1ex]
+    const &
+      0&917379 &
+        0&376027 &
+          2&440 &
+            0&0202 \\
+    pc\_Y &
+      0&722665 &
+        0&0985844 &
+          7&330 &
+          2&05e-08 \\
+    \end{tabular}
+    
+    \vspace{1ex}
+    \begin{tabular}{lrlr}
+    Media de la vble. dep. &  3.349682 & D.T. de la vble. dep. &  1.671687 \\
+    Suma de cuad. residuos &  36.15000 & D.T. de la regresión &  1.046640 \\
+    $R^2$ &  0.619531 & $R^2$ corregido &  0.608001 \\
+    $F(1, 33)$ &  53.73502 & Valor p (de $F$) &  2.05\textrm{e--08} \\
+    Log-verosimilitud & $-$50.22860 & Criterio de Akaike &  104.4572 \\
+    Criterio de Schwarz &  107.5679 & Hannan--Quinn &  105.5310 \\
+    $\hat{\rho}$ & $-$0.106674 & Durbin--Watson &  2.124016 \\
+    \end{tabular}
+\end{center}
+al cual se le realizaron pruebas de RESET de Ramsey para detectar posibles errores de especificación en la forma funcional del modelo.
+Se obtuvieron los siguientes resultados:
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lcc}
+        \toprule
+        Prueba & Valor p & Rechaza $H_0$ al $95\%$\\
+        \midrule
+        Cuadrados & 0.0182409 & Sí \\
+        Cubos & 0.0186227 & Sí \\
+        \bottomrule
+    \end{tabular}
+    \caption{Valores p de las pruebas RESET de Ramsey para el Modelo 1.} 
+    \label{tab:reset_mod1}
+\end{table}
+Con base en los resultados de la tabla \ref{tab:reset_mod1}, se rechaza la hipótesis nula 
+de especificación adecuada. Para la corrección de este supuesto se agregaron 
+las variables pc\_Y$^2$ y pc\_Y$^3$ al modelo, obteniéndose el siguiente resultado:
+    
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lcclcc}
+        \toprule
+        Variable agregada & $R^2$ & $R^2$ corregido & Prueba & Valor p & Rechaza $H_0$ al $95\%$\\
+        \midrule
+        \multirow{2}{3em}{sq\_pc\_Y} & \multirow{2}{3em}{0.681204} & \multirow{2}{3em}{0.661279} & Cuadrados & 0.78708 & No \\
+        & & & Cubos & 0.981524 & No \\
+        \hline
+        \multirow{2}{3em}{cubo\_pc\_Y} & \multirow{2}{3em}{0.679652} & \multirow{2}{3em}{0.659630} & Cuadrados & 0.652204 & No \\
+        & & & Cubos & 0.527084 & No \\
+        \bottomrule
+    \end{tabular}
+    \caption{Modelos con variables agregadas\\ y resultados de las pruebas RESET de Ramsey.} 
+    \label{tab:reset_cuad_cub}
+\end{table}
+Además de agregar las variables cuadráticas y cúbicas, se utilizó el método 
+de mínimos cuadrados no lineales para estimar el siguiente modelo:
+\begin{center}
+
+    Modelo 6: MC. no lineales, usando las observaciones 1951--1985 ($T$ = 35)\\
+    \verb!pc_C = alfa + beta * sgnY * (absY^gamma)!\\
+    
+    \vspace{1em}
+    
+    \begin{tabular}{lr@{.}lr@{.}lr@{.}lr@{.}l}
+      &
+     \multicolumn{2}{c}{Estimación} &
+      \multicolumn{2}{c}{Desv.\ Típica} &
+       \multicolumn{2}{c}{Estadístico $t$} &
+        \multicolumn{2}{c}{valor p} \\[1ex]
+    alfa &
+      0&303938 &
+        0&449547 &
+          0&6761 &
+            0&5038 \\
+    $\beta$ &
+      1&49164 &
+        0&401658 &
+          3&714 &
+            0&0008 \\
+    $\gamma$ &
+      0&634669 &
+        0&135090 &
+          4&698 &
+          4&77e-05 \\
+    \end{tabular}
+    
+    \vspace{1ex}
+    \begin{tabular}{lrlr}
+    Media de la vble. dep. &  3.349682 & D.T. de la vble. dep. &  1.671687 \\
+    Suma de cuad. residuos &  31.44268 & D.T. de la regresión &  0.991254 \\
+    $R^2$ &  0.669074 & $R^2$ corregido &  0.648391 \\
+    Log-verosimilitud & $-$47.78717 & Criterio de Akaike &  101.5743 \\
+    Criterio de Schwarz &  106.2404 & Hannan--Quinn &  103.1851 \\
+    $\hat{\rho}$ & $-$0.145914 & Durbin--Watson &  2.191558 \\
+    \end{tabular}
+    \end{center}
+donde sgnY = sign(pc\_Y) y absY = |pc\_Y|, ya que pc\_Y toma valores negativos, lo 
+cual no permite elevarla a una potencia fraccionaria directamente.\\
+Después de obtener tres modelos que corrigen el supuesto de forma funcional, notamos que 
+cada uno es una posible solución al problema, pero por simplicidad y por capacidad 
+explicativa se opta por el Modelo 2 (con variable cuadrática) como la mejor opción.
+
+
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%% Tema : Cambio estructural
+%%%%%%%%%%%%%%%%%%%
+
+\subsection*{Cambio estructural}
+Se utilizaron las variables de la data \textbf{data9-2} para estimar el siguiente modelo de regresión lineal:
+\begin{center}
+
+    Modelo 1: MCO, usando las observaciones 1961--1995 ($T$ = 35)\\
+    Variable dependiente: pc\_D\\
+    
+    \vspace{1em}
+    
+    \begin{tabular}{lr@{.}lr@{.}lr@{.}lr@{.}l}
+      &
+     \multicolumn{2}{c}{Coeficiente} &
+      \multicolumn{2}{c}{Desv.\ Típica} &
+       \multicolumn{2}{c}{Estadístico $t$} &
+        \multicolumn{2}{c}{valor p} \\[1ex]
+    const &
+      21&5575 &
+        48&9344 &
+          0&4405 &
+            0&6624 \\
+    pc\_r &
+      $-$1&23871 &
+        2&43345 &
+          $-$0&5090 &
+            0&6141 \\
+    \end{tabular}
+    
+    \vspace{1ex}
+    \begin{tabular}{lrlr}
+    Media de la vble. dep. &  17.77867 & D.T. de la vble. dep. &  283.0141 \\
+    Suma de cuad. residuos &   2702081 & D.T. de la regresión &  286.1490 \\
+    $R^2$ &  0.007791 & $R^2$ corregido & -0.022276 \\
+    $F(1, 33)$ &  0.259118 & Valor p (de $F$) &  0.614114 \\
+    Log-verosimilitud & $-$246.6111 & Criterio de Akaike &  497.2222 \\
+    Criterio de Schwarz &  500.3329 & Hannan--Quinn &  498.2960 \\
+    $\hat{\rho}$ & $-$0.106771 & Durbin--Watson &  1.644262 \\
+    \end{tabular}
+\end{center}
+Al cual se le aplicó la prueba RV de Quandt para detectar posibles cambios estructurales 
+en los parámetros del modelo. Se obtuvo el siguiente gráfico:
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.55\textwidth]{imagenes/rv_quandt.pdf}
+    \caption{Resultados prueba RV de Quandt.}
+    \label{fig:rv_quandt}
+\end{figure}\\
+En la figura \ref{fig:rv_quandt} se observa que el valor del estadístico de la prueba es 
+mayor que el valor crítico al $5\%$ en varios puntos antes del año 1973. También
+se obtuvo un valor $$p_{\text{asintótico}} = 2.27933e-06,$$ por lo que se rechaza la hipótesis nula 
+de que no hay cambio estructural.\\
+También se realizó la prueba de Chow para un posible cambio estructural en 1971, obteniéndose:
+$$ p = 0.0018241.$$ Chow también rechaza la hipótesis nula de que no hay cambio estructural en 1971.\\ 
+Por último se realizaron las pruebas CUSUM y CUSUMSQ, obteniéndose los siguientes gráficos:
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.47\textwidth}
+        \includegraphics[width=0.9\textwidth]{imagenes/cusum.pdf}
+        \caption{Prueba CUSUM.}
+        \label{fig:cusum}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \includegraphics[width=0.9\textwidth]{imagenes/cusumsq.pdf}
+        \caption{Prueba CUSUMSQ.}
+        \label{fig:cusumsq}
+    \end{subfigure}
+    \caption{Gráficos de las pruebas CUSUM y CUSUMSQ.}
+    \label{fig:cusum_cusumsq}
+\end{figure}\\
+La figura \ref{fig:cusumsq} muestra que la serie sale de las bandas de confianza, 
+por lo tanto hay evidencia de cambio estructural según la prueba CUSUMSQ.\\
+Dado que tres de las cuatro pruebas realizadas indican la presencia de un cambio estructural,
+se concluye que el modelo presenta un cambio estructural en sus parámetros durante el periodo analizado.\\
+Para corregir este supuesto, se restringió la muestra, el periodo analizado fue de 1976
+a 1975, y se obtuvo el siguiente modelo:\\
+\begin{center}
+
+    Modelo 2: MCO, usando las observaciones 1976--1995 ($T$ = 20)\\
+    Variable dependiente: pc\_D\\
+    
+    \vspace{1em}
+    
+    \begin{tabular}{lr@{.}lr@{.}lr@{.}lr@{.}l}
+      &
+     \multicolumn{2}{c}{Coeficiente} &
+      \multicolumn{2}{c}{Desv.\ Típica} &
+       \multicolumn{2}{c}{Estadístico $t$} &
+        \multicolumn{2}{c}{valor p} \\[1ex]
+    const &
+      10&8798 &
+        7&13391 &
+          1&525 &
+            0&1446 \\
+    pc\_r &
+      $-$0&491531 &
+        0&326291 &
+          $-$1&506 &
+            0&1493 \\
+    \end{tabular}
+    
+    \vspace{1ex}
+    \begin{tabular}{lrlr}
+    Media de la vble. dep. &  10.16971 & D.T. de la vble. dep. &  32.88025 \\
+    Suma de cuad. residuos &  18241.38 & D.T. de la regresión &  31.83410 \\
+    $R^2$ &  0.111957 & $R^2$ corregido &  0.062622 \\
+    $F(1, 18)$ &  2.269297 & Valor p (de $F$) &  0.149308 \\
+    Log-verosimilitud & $-$96.53593 & Criterio de Akaike &  197.0719 \\
+    Criterio de Schwarz &  199.0633 & Hannan--Quinn &  197.4606 \\
+    $\hat{\rho}$ & $-$0.020072 & Durbin--Watson &  2.010282 \\
+    \end{tabular}
+    \end{center}
+Lo primero que observamos es que a pesar de que pc\_r no es estadísticamente significativa,
+el valor de $R^2$ y $R^2$ corregido mejoró con respecto al modelo 1. Además, al aplicar las pruebas
+de cambio estructural al modelo 2, se obtuvieron los siguientes resultados:
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.55\textwidth]{imagenes/rv_quandt2.pdf}
+    \caption{Resultados prueba RV de Quandt.}
+    \label{fig:rv_quandt2}
+\end{figure}\\
+En este caso el valor del estadístico de la prueba es menor que el valor crítico al $5\%$ en todos los puntos,
+y se obtuvo un valor $$p_{\text{asintótico}} = 0.38144,$$ por lo que no se rechaza la hipótesis nula. El valor 
+máximo de la prueba se encuentra en 1984. Se realizó la prueba de Chow para un posible cambio estructural en 1984, obteniéndose:
+$$ p = 0.0718637.$$ Chow no rechaza la hipótesis nula de que no hay cambio estructural en 1984.\\
+Por último se realizaron las pruebas CUSUM y CUSUMSQ, obteniéndose los siguientes gráficos:
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.47\textwidth}
+        \includegraphics[width=0.9\textwidth]{imagenes/cusum2.pdf}
+        \caption{Prueba CUSUM.}
+        \label{fig:cusum2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \includegraphics[width=0.9\textwidth]{imagenes/cusumsq2.pdf}
+        \caption{Prueba CUSUMSQ.}
+        \label{fig:cusumsq2}
+    \end{subfigure}
+    \caption{Gráficos de las pruebas CUSUM y CUSUMSQ.}
+    \label{fig:cusum_cusumsq2}
+\end{figure}\\
+La prueba CUSUM (figura \ref{fig:cusum2}) muestra que la serie se mantiene dentro de las bandas de confianza, pero la figura \ref{fig:cusumsq2} muestra que la serie sale de las bandas de confianza. 
+Sin embargo, dado que la mayoría de las pruebas no indican la presencia de un cambio estructural,
+se concluye que el modelo 2 no presenta un cambio estructural en sus parámetros durante el periodo analizado.\\
+Por lo que se considera que se ha corregido el supuesto de cambio estructural en el modelo original.
+
+%\printbibliography
+
+% ------------------------------
+% FIN DEL DOCUMENTO
+% ------------------------------
+\end{document}
